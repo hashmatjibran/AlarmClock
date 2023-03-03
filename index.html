@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--favicon link  -->
+    <link rel="icon" type="image/x-icon" href="./Images/favicon.png">
+    <!-- custom css for styling -->
+    <link rel="stylesheet" href="./style.css">
+    <!-- bootstrap css cdn link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- media queries css link -->
+    <link rel="stylesheet" href="./mediaQueries.css">
+    <title>Alarm Clock</title>
+</head>
+<body>
+  
+ <!-- toast for Displaying Alarm is Ringing and Stop the Alarm -->
+  <div class="toast-container position-fixed top-0 start-0 p-3" autohide>
+    <div id="ringToast" class="toast" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img width="50px" height="50px" src="./Images/giphy.gif" class="rounded me-2" alt="...">
+        <strong class="me-auto text-info" id="toastHeading">Alarm Ringing</strong>
+        <small>1 sec ago</small>
+        <button type="button" id="stopAlarm" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div id="Ring-Alarm" class="toast-body">
+        
+      </div>
+    </div>
+  </div>
+
+
+  <!-- toast for success Addition of Alarm or Deletion of Alarm -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <span style='font-size:50px;'>&#128161;</span>
+        <strong class="me-auto">Alarm Notification</strong>
+        <small>1 sec ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div id="toast-message" class="toast-body text-success">
+        
+      </div>
+    </div>
+  </div>
+    
+ 
+
+
+    <!-- Inside the header there is a Top heading , An Analog Clock and a date Bar -->
+   <header>
+      <h1 class="top-heading ">
+          Alarm Clock
+      </h1>
+
+    <div id="time-div">
+
+    </div>
+
+<!-- Analog Clock  -->
+    <div class="clock">
+        
+          <div id="central_hindge"></div>
+          <div id="hour"></div>
+          <div id="minute"></div>
+          <div id="second"></div>
+
+    </div>
+
+   </header>
+
+   
+   <!-- digital Timer Clock -->
+   <section class="digital-clock">
+
+        <div id="digital-hour"></div><span class="divider">:</span>
+        <div id="digital-minute"></div><span class="divider">:</span>
+        <div id="digital-second"></div>
+        <div id="AmPm"></div>
+
+   </section>
+   
+   <!-- the section related to buttons Like set new Alarm and Edit/view Alarm -->
+    <section class="buttons-section">
+      
+         <!-- Code for Set Alarm -->
+        <div class="btn-div">
+
+              <!-- Button triggering set Alarm Model provided below this code  -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAlarm">
+        Set New Alarm
+      </button>
+   
+   <!-- Modal for creating an Alarm -->
+    <div class="modal fade" id="createAlarm" tabindex="-1" aria-labelledby="model1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="model1">Create Alarm</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <input type="text" id="alarmName" class="form-control mt-0" placeholder="Alarm Name">
+
+              <div class="input-group mt-2">
+                  <span class="input-group-text" id="basic-addon3">hr : min</span>
+                  <input class="form-control" type="time" id="time" aria-describedby="basic-addon3" required >
+                  <span class="error"></span>
+                </div>
+
+
+                <select class="form-select mt-2" id="selectTrack">
+                  <option value="" selected disabled>Select Audio Track</option>
+                  <option  value="track-1" >Nokia Tune (Default)</audio></option>
+                  <option value="track-2">iphone tune </option>
+                  <option value="track-3">city </option>
+                  <option value="track-4">Fire</option>
+                  <option value="track-5">Buzzer </option>
+                  <option value="track-6">Beep </option>
+                  <option value="track-7">Soft Beep </option>
+                </select>
+
+
+
+            <input class="form-check-input mt-2 " type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label mt-2" for="flexCheckDefault">Repeat Alarm </label>
+
+            <select class="form-select mt-2" id="selectDays" multiple="multiple" >
+              <option selected value="" disabled>Select Day/'s</option>
+              <option  value="1">Mon</option>
+              <option value="2">Tue</option>
+              <option value="3">Wed</option>
+              <option value="4">Thur</option>
+              <option value="5">Fri</option>
+              <option value="6">Sat</option>
+              <option value="0">Sun</option>
+            </select>
+          
+          </div>
+          <div class="modal-footer">
+            <button id="close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="createAlarm()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+        
+        <img class="clock-image" src="./Images/alarm.gif" alt=""> 
+
+        </div>
+
+        <!-- Code for View and edit The Alarm -->
+        <div class="btn-div">
+
+
+        <!-- View/Edit Button to Trigger Model provided below this code  -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewAndEdit">
+            View/Edit Alarms
+            </button>    <i class="fa-regular fa-folder-open icon"></i>
+    
+            <!-- Modal to display all the Alarms -->
+            <div class="modal fade" id="viewAndEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">All Alarms</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <ol id="alarmList" class="list-group list-group-numbered">
+
+
+                  <!-- Alarms will be inserted here via js code -->
+
+                        
+                    </ol>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+                  
+        </div>
+    </section>
+
+    <!-- description related the about of the project what and what not has been used -->
+    <section class="description">
+
+        <h2 class="text-center">About</h2>
+     <ol>
+        <li>
+            The Main purpose of this project is to make One understand How to create an Alarm Application using the front end technologies.
+        </li>
+        <li>
+            I have tried to maintain and keep the functionality of this project very simple and understandable.
+        </li>
+        <li>
+            I also have used different kinds of technologies like Html , css , bootstrap and JavaScript.
+        </li>
+        <li>
+            The source code of this project can also be found on my GitHub page which is provided in the footer section of this project.
+        </li>
+     </ol>
+        
+    </section>
+
+    <!-- USAGE  -->
+    <section class="usage">
+
+        <h2 class="text-center">How To Use?</h2>
+     <ol>
+        <li>
+            To create an Alarm Go to Set New Alarm.
+        </li>
+        <li>
+            A model will Appear After Clicking on the button. There you can easily create a New Alarm.
+        </li>
+        <li>
+            In Order to view all the Alarms Or edit the Alarms Just click on the View/Edit Alarms button. 
+        </li>
+        <li>
+            You can Also Download the Pdf by clicking on the Download icon here.    <a href ="./Images/alarm.gif" target="_blank" attributes-list download > <i class="fa-solid fa-download"></i> </a>  
+        </li>
+     </ol>
+        
+    </section>
+
+    <!-- section showing latest Alarms upto 3 only -->
+    <section class="showAlarm">
+        <h1 class="text-center">Recent Alarms</h1>
+        <ol id="recentAlarms" class="list list-group-numbered"  >
+        </ol>
+    </section>
+
+
+    <!-- different ringtones used in the project -->
+    <section id="audio_section">
+            <audio  id="track-1"><source src="./Audio/nokia.mp3" type="audio/mp3">
+            <audio  id="track-2"> <source src="./Audio/iphone.mp3" type="audio/mp3"> </audio>
+            <audio  id="track-3"> <source src="./Audio/city.wav" type="audio/mp3"> </audio>
+            <audio  id="track-4"> <source src="./Audio/Fire.wav" type="audio/mp3"> </audio>
+            <audio  id="track-5"> <source src="./Audio/buzzer.wav" type="audio/mp3"> </audio>
+            <audio  id="track-6"> <source src="./Audio/Beep.wav" type="audio/mp3"> </audio>
+            <audio  id="track-7"> <source src="./Audio/softBeep.wav" type="audio/mp3"> </audio>
+    </section>
+
+    <!-- footer Section containing Name , Icons and full time  -->
+    <footer >
+
+        <h4 class="footerName" style="font-size: 1rem"><span>Made with <i class="fa-solid fa-heart heart"></i> from Hashmat Jibran Bhat</span>  
+          <span class="footerIcons">
+            <a href="https://github.com/hashmatjibran/AlarmClock" target="_blank"><i class="fa-brands fa-github"></i></a>
+             &nbsp; 
+             <a href="https://www.linkedin.com/in/hashmat-jibran-634134212/" target="_blank"> <i class="fa-brands fa-linkedin-in"></i></a>
+            </span>
+          </h4>
+
+        <h2 id="earthAndTime" style="font-size:0.8rem; color:brown"></h2>
+
+   </footer>
+
+   <!-- custom javascript link -->
+    <script src="./alarm.js"></script>
+    <!-- fontawesome script link -->
+    <script src="https://kit.fontawesome.com/7d7d520dab.js" crossorigin="anonymous"></script>
+    <!-- bootstrap script link -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
